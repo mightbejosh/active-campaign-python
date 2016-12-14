@@ -1,6 +1,6 @@
 
-from Config import ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY
-from Connector import Connector
+from .Config import ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY
+from .Connector import Connector
 
 class ActiveCampaign(Connector):
 
