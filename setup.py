@@ -4,4 +4,4 @@ from distutils.core import setup
 
 setup(name='Active Campaign',
       version='1.0',
-      py_modules=['activecampaign'])
+      packages=['activecampaign'])
