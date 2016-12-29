@@ -3,5 +3,9 @@
 from distutils.core import setup
 
 setup(name='Active Campaign',
-      version='1.0',
-      packages=['activecampaign'])
+      version='2.0',
+      packages=['activecampaign'],
+      install_requires=[
+          'simplejson',
+      ],
+      )

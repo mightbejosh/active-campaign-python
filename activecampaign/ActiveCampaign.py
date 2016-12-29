@@ -2,6 +2,11 @@
 from .Config import ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY
 from .Connector import Connector
 
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
+
 class ActiveCampaign(Connector):
 
     def __init__(self, url, api_key, api_user = '', api_pass = ''):
@@ -9,7 +14,10 @@ class ActiveCampaign(Connector):
         self.api_key = api_key
         Connector.__init__(self, url, api_key, api_user, api_pass)
 
-    def api(self, path, post_data = {}):
+    def api(self, path, post_data=None, **kwargs):
+        if not post_data:
+            post_data = kwargs.pop('data', {})
+
         # IE: "subscriber/view"
         components = path.split('/')
         component = components[0]
@@ -21,11 +29,9 @@ class ActiveCampaign(Connector):
             method = method_arr[0]
             params = method_arr[1]
         else:
-            # just a method provided
-            # IE: "subscriber/view
             if components[1]:
                 method = components[1]
-                params = ''
+                params = urlencode(kwargs)
             else:
                 return 'Invalid method.'
 
@@ -34,16 +40,16 @@ class ActiveCampaign(Connector):
             # reserved word
             component = 'design'
         elif component == 'sync':
-            component = 'subscriber'
+            component = 'contact'
             method = 'sync'
         elif component == 'singlesignon':
             component = 'auth'
 
-        class1 = '%s' % component.capitalize() # IE: "subscriber" becomes "Subscriber"
-        source_module = __import__(class1, globals(), locals(), [], -1) # import Subscriber
-        class1 = getattr(source_module, class1) # get Subscriber
-        class1 = class1(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY) # Subscriber()
-        # subscriber.view()
+        class1 = '%s' % component.capitalize() # IE: "contact" becomes "Contact"
+        source_module = __import__(class1, globals(), locals(), [], -1) # import Contact
+        class1 = getattr(source_module, class1) # get Contact
+        class1 = class1(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY) # Contact()
+        # contact.view()
 
         if method == 'list':
             # reserved word

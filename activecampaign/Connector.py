@@ -1,6 +1,11 @@
 import json
+
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
+
 from .Config import ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY
-import urllib.request, urllib.error, urllib.parse
 
 class Connector():
 
@@ -23,7 +28,7 @@ class Connector():
 
     def credentials_test(self):
         test_url = '%s&api_action=group_view&api_output=%s&id=3' % (self.url, self.output)
-        jdata = json.loads(urllib.request.urlopen(test_url).read())
+        jdata = json.loads(urlopen(test_url).read())
         return jdata['result_code'] == 1
 
 if __name__ == '__main__':

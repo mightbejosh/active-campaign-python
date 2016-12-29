@@ -1,5 +1,5 @@
-from includes.ActiveCampaign import ActiveCampaign
-from includes.Config import ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY
+from activecampaign.ActiveCampaign import ActiveCampaign
+from activecampaign.Config import ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY
 
 if __name__ == '__main__':
     ac = ActiveCampaign(ACTIVECAMPAIGN_URL,  ACTIVECAMPAIGN_API_KEY)
@@ -11,7 +11,7 @@ if __name__ == '__main__':
     #print ac.api('subscriber/delete_list?ids=9,11')
 
     # edit subscriber
-    subscriber = {
+    contact = {
        'id': 12,
        'email': 'person@example.com',
        'first_name': 'John',
@@ -19,4 +19,4 @@ if __name__ == '__main__':
        'p[1]': 1,
        'status[1]': 1,
     }
-    print ac.api('subscriber/edit', subscriber)
+    print ac.api('contact/edit', contact)
