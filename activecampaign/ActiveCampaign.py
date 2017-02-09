@@ -18,6 +18,9 @@ class ActiveCampaign(Connector):
         if not post_data:
             post_data = kwargs.pop('data', {})
 
+        for k, v in post_data.items():
+            post_data[k] = unicode(v).encode('utf-8')
+
         # IE: "subscriber/view"
         components = path.split('/')
         component = components[0]
