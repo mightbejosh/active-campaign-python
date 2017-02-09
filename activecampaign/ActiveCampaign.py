@@ -31,6 +31,8 @@ class ActiveCampaign(Connector):
         else:
             if components[1]:
                 method = components[1]
+                for k, v in kwargs.items():
+                    kwargs[k] = unicode(v).encode('utf-8')
                 params = urlencode(kwargs)
             else:
                 return 'Invalid method.'
